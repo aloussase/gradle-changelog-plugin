@@ -4,7 +4,13 @@ plugins {
     application
 }
 
-dependencies {
+changelog {
+    format = "markdown"
+    outputFileName = "CHANGELOG.md"
+
+    git {
+        baseBranch = "master"
+    }
 }
 
 application {

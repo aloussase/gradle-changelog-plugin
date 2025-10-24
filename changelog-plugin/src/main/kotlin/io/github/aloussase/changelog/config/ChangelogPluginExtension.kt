@@ -10,7 +10,7 @@ abstract class ChangelogPluginExtension {
 
     abstract val format: Property<String>
 
-    abstract val outputFileName: Property<String>
+    abstract val fileName: Property<String>
 
     fun git(action: Action<GitInfo>) = action.execute(gitInfo)
 }

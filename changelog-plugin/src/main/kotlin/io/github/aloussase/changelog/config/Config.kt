@@ -4,7 +4,7 @@ import io.github.aloussase.changelog.formats.DocumentFormat
 import org.gradle.api.GradleException
 
 data class Config(
-    val outputFileName: String,
+    val fileName: String,
     val gitBranch: String,
     val documentFormat: DocumentFormat,
 ) {
@@ -20,7 +20,7 @@ data class Config(
                 throw GradleException("Branch name cannot be blank")
             }
 
-            val outputFileName = extension.outputFileName.get()
+            val outputFileName = extension.fileName.get()
             if (outputFileName.isBlank()) {
                 throw GradleException("Output file name cannot be blank")
             }

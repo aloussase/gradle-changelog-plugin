@@ -1,5 +1,5 @@
 package io.github.aloussase.changelog
 
 data class Changelog(
-    val entries: List<ChangelogEntry>
+    val entries: List<ChangelogEntry> = emptyList(),
 )

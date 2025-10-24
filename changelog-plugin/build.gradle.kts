@@ -17,3 +17,12 @@ gradlePlugin {
         }
     }
 }
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testImplementation("org.hamcrest:java-hamcrest:2.0.0.0")
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+}

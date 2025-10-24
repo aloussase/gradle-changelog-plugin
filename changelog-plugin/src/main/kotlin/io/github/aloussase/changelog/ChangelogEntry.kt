@@ -4,5 +4,5 @@ import io.github.aloussase.changelog.git.Commit
 
 data class ChangelogEntry(
     val branchName: String,
-    val commit: Commit,
+    val commits: List<Commit> = emptyList(),
 )

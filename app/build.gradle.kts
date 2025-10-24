@@ -6,7 +6,7 @@ plugins {
 
 changelog {
     format = "markdown"
-    outputFileName = "CHANGELOG.md"
+    fileName = "CHANGELOG.md"
 
     git {
         baseBranch = "master"

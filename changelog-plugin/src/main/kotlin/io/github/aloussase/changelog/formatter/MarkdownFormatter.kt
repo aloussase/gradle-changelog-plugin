@@ -4,6 +4,6 @@ import io.github.aloussase.changelog.Changelog
 
 class MarkdownFormatter : ChangelogFormatter {
     override fun format(changelog: Changelog): String {
-        return changelog.entries.first().branchName
+        return changelog.entries.first().release
     }
 }

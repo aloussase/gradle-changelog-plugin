@@ -11,8 +11,8 @@ import org.gradle.api.GradleException
 class MarkdownChangelogParser : ChangelogParser {
 
     companion object {
-        private val BRANCH_NAME_REGEX = Regex("## [\\w-]+")
-        private val COMMIT_REGRX = Regex("- [\\w ]+")
+        private val RELEASE_VERSION_REGEX = Regex("## \\[(\\d+\\.\\d+\\.\\d+)]")
+        private val COMMIT_REGEX = Regex("- ([\\w-]+): ([\\w ]+) \\(([\\w.]+@[\\w.]+)\\)")
         private val DOC_TITLE_REGEX = Regex("# (Changelog|CHANGELOG)")
     }
 
@@ -29,28 +29,37 @@ class MarkdownChangelogParser : ChangelogParser {
             val lines = blk.split("\n")
             if (lines.isEmpty()) continue
 
-            val branchName = lines[0]
-            if (!BRANCH_NAME_REGEX.matches(branchName)) {
+            val releaseMatch = RELEASE_VERSION_REGEX.matchEntire(lines[0])
+            if (releaseMatch == null) {
                 return Result.failure(
-                    GradleException("Expected a valid branch name, but got $branchName")
+                    GradleException("Expected a valid release version, but got ${lines[0]}")
                 )
             }
 
+            val releaseVersion = releaseMatch.groupValues[1]
             val commits = arrayListOf<Commit>()
 
             for (line in lines.subList(1, lines.size)) {
-                if (COMMIT_REGRX.matches(line)) {
-                    commits.add(Commit(line.dropWhile { it == '-' || it == ' ' }))
+                val commitMatch = COMMIT_REGEX.matchEntire(line)
+                if (commitMatch != null) {
+                    val (branchName, message, author) = commitMatch.destructured
+                    commits.add(
+                        Commit(
+                            author,
+                            branchName,
+                            message,
+                        )
+                    )
                 } else {
                     return Result.failure(
-                        GradleException("Expected a valid commit message, but got $line")
+                        GradleException("Expected a valid commit line, but got $line")
                     )
                 }
             }
 
             entries.add(
                 ChangelogEntry(
-                    branchName.dropWhile { it == '#' || it == ' ' },
+                    releaseVersion,
                     commits
                 )
             )

@@ -1,8 +1,7 @@
 package io.github.aloussase.changelog.parser
 
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.emptyIterable
-import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.*
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -34,20 +33,21 @@ class MarkdownChangelogParserTests {
 
     @Test
     fun givenDocumentContainingSingleEntryWithNoCommitsWhenParseisInvokedThenReturnChangelogWithThatEntryAndNoCommits() {
-        val doc = "# Changelog\n\n## LOYMAR-123"
+        val doc = "# Changelog\n\n## [0.1.1]"
         val parser = MarkdownChangelogParser()
 
         val result = parser.parse(doc)
 
         assertThat(result.isSuccess, equalTo(true))
         assertThat(result.getOrThrow().entries, hasSize(1))
-        assertThat(result.getOrThrow().entries.first().branchName, equalTo("LOYMAR-123"))
+        assertThat(result.getOrThrow().entries.first().release, equalTo("0.1.1"))
         assertThat(result.getOrThrow().entries.first().commits, emptyIterable())
     }
 
     @Test
     fun givenDocumentContainingSingleEntryWithCommitsWhenParseIsInvokedThenReturnChangelogWithSingleEntryAndCommits() {
-        val doc = "# Changelog\n\n## LOYMAR-123\n- first commit\n- second commit"
+        val doc =
+            "# Changelog\n\n## [0.1.1]\n- LOYMAR-123: first commit (johndoe@gmail.com)\n- LOYMAR-123: second commit (johndoe@gmail.com)"
         val parser = MarkdownChangelogParser()
 
         val result = parser.parse(doc)
@@ -61,16 +61,50 @@ class MarkdownChangelogParserTests {
 
     @Test
     fun givenDocumentWithTwoEntriesWhenParseIsInvokedThenReturnChangelogWithTwoEntries() {
-        val doc = "# Changelog\n\n## LOYMAR-123\n- first commit\n- second commit\n\n## LOYMAR-456\n- third commit"
+        val doc =
+            "# Changelog\n\n## [0.1.1]\n- LOYMAR-123: first commit (johndoe@gmail.com)\n\n## [0.1.0]\n- LOYMAR-123: third commit (janedoe@gmail.com)"
         val parser = MarkdownChangelogParser()
 
         val result = parser.parse(doc)
 
         assertThat(result.isSuccess, equalTo(true))
         assertThat(result.getOrThrow().entries, hasSize(2))
-        assertThat(result.getOrThrow().entries[0].commits, hasSize(2))
+        assertThat(result.getOrThrow().entries[0].commits, hasSize(1))
         assertThat(result.getOrThrow().entries[1].commits, hasSize(1))
         assertThat(result.getOrThrow().entries[1].commits[0].message, equalTo("third commit"))
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "LOYMAR-123",
+            "0.1.x",
+            ""
+        ]
+    )
+    fun givenDocumentWithInvalidReleaseVersionWhenParseIsInvokedThenExceptionShouldBeThrown(releaseVersion: String) {
+        val doc =
+            "# Changelog\n\n## $releaseVersion\n- LOYMAR-123: first commit (johndoe@gmail.com)\n\n## [0.1.0]\n- LOYMAR-123: third commit (janedoe@gmail.com)"
+        val parser = MarkdownChangelogParser()
+
+        val result = parser.parse(doc)
+
+        assertThat(result.isFailure, equalTo(true))
+        assertThat(result.exceptionOrNull()?.message, containsString("Expected a valid release version"))
+        assertThat(result.exceptionOrNull()?.message, containsString(releaseVersion))
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["LOYMAR 123", "", "@@@"])
+    fun givenDocumentWithInvalidCommitBranchWhenParseIsInvokedThenFailureShouldBeReturned(branchName: String) {
+        val doc = "# Changelog\n\n## [1.1.1]\n- $branchName: first commit (johndoe@gmail.com)"
+        val parser = MarkdownChangelogParser()
+
+        val result = parser.parse(doc)
+
+        assertThat(result.isFailure, equalTo(true))
+        assertThat(result.exceptionOrNull()?.message, containsString(branchName))
+        assertThat(result.exceptionOrNull()?.message, containsString("Expected a valid commit"))
     }
 
 }

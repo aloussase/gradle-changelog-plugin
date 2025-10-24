@@ -7,6 +7,11 @@ data class ChangelogEntry(
     val commits: List<Commit> = emptyList(),
 ) : Comparable<ChangelogEntry> {
     override fun compareTo(other: ChangelogEntry): Int {
+
+        // Unreleased always goes at the top.
+        if (release == "Unreleased") return -1
+        if (other.release == "Unreleased") return 1
+
         val myRelease = release.split(".").map { it.toInt() }
         val otherRelease = other.release.split(".").map { it.toInt() }
         return Comparator

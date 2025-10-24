@@ -1,4 +1,4 @@
-package io.github.aloussase.changelog.git
+package io.github.aloussase.changelog.git.commands
 
 interface GitCommand<T> {
 

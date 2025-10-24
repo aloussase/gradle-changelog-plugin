@@ -4,6 +4,6 @@ interface GitCommand<T> {
 
     val commandLine: String
 
-    fun execute(): T
+    fun execute(): Result<T>
 
 }

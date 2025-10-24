@@ -9,7 +9,7 @@ changelog {
     fileName = "CHANGELOG.md"
 
     git {
-        baseBranch = "master"
+        baseBranch = "main"
     }
 }
 

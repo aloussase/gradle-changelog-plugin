@@ -10,8 +10,8 @@ class GitService(
 ) {
 
     fun getCurrrentBranchChanges(): ChangelogEntry {
-        val currentBranch = currentBranchCommand.execute()
-        val commits = currentBranchCommitsCommand.execute()
+        val currentBranch = currentBranchCommand.execute().getOrThrow()
+        val commits = currentBranchCommitsCommand.execute().getOrThrow()
         val release = Tag("Unreleased")
         return ChangelogEntry(
             release.name,

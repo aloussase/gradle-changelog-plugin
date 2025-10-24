@@ -1,9 +1,9 @@
 package io.github.aloussase.changelog.git
 
-interface GitCommand {
+interface GitCommand<T> {
 
     val commandLine: String
 
-    fun execute(): String
+    fun execute(): T
 
 }

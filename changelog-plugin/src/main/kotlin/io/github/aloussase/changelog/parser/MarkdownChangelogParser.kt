@@ -23,7 +23,7 @@ class MarkdownChangelogParser : ChangelogParser {
 
         val entries = arrayListOf<ChangelogEntry>()
 
-        for (blk in doc.split("\n\n")) {
+        for (blk in doc.trim().split("\n\n")) {
             if (DOC_TITLE_REGEX.matches(blk)) continue
 
             val lines = blk.split("\n")

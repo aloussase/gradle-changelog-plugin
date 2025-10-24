@@ -11,8 +11,8 @@ import org.gradle.api.GradleException
 class MarkdownChangelogParser : ChangelogParser {
 
     companion object {
-        private val RELEASE_VERSION_REGEX = Regex("## \\[(\\d+\\.\\d+\\.\\d+)]")
-        private val COMMIT_REGEX = Regex("- ([\\w-]+): ([\\w ]+) \\(([\\w.]+@[\\w.]+)\\)")
+        private val RELEASE_VERSION_REGEX = Regex("## (\\[(\\d+\\.\\d+\\.\\d+|Unreleased)])")
+        private val COMMIT_REGEX = Regex("- ([\\w-]+): ([\\w :]+) \\(([\\w.]+@[\\w.]+|[\\w ]+)\\)")
         private val DOC_TITLE_REGEX = Regex("# (Changelog|CHANGELOG)")
     }
 
@@ -36,7 +36,7 @@ class MarkdownChangelogParser : ChangelogParser {
                 )
             }
 
-            val releaseVersion = releaseMatch.groupValues[1]
+            val releaseVersion = releaseMatch.groupValues[2]
             val commits = arrayListOf<Commit>()
 
             for (line in lines.subList(1, lines.size)) {

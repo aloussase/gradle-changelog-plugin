@@ -47,8 +47,8 @@ abstract class ChangelogTask : DefaultTask() {
                             if (it.release == changes.release) {
                                 ChangelogEntry(
                                     changes.release,
-                                    it.commits.toSet()
-                                        .union(changes.commits.toSet())
+                                    changes.commits.toSet()
+                                        .union(it.commits.toSet())
                                         .toList()
                                 )
                             } else {

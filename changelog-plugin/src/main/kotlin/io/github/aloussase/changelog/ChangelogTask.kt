@@ -17,11 +17,13 @@ abstract class ChangelogTask : DefaultTask() {
     @Input
     lateinit var config: Config
 
-    private val gitService = GitService(
-        GetCurrentBranchCommand(),
-        GetCurrentBranchCommitsCommand(),
-        GetCurrentReleaseCommand(),
-    )
+    private val gitService by lazy {
+        GitService(
+            GetCurrentBranchCommand(),
+            GetCurrentBranchCommitsCommand(config.gitBranch),
+            GetCurrentReleaseCommand(),
+        )
+    }
 
     @TaskAction
     fun run() {

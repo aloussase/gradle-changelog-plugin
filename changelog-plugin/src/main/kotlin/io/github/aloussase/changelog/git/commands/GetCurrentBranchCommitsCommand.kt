@@ -2,9 +2,12 @@ package io.github.aloussase.changelog.git.commands
 
 import io.github.aloussase.changelog.git.RawCommit
 
-class GetCurrentBranchCommitsCommand : AbstractGitCommand<List<RawCommit>>() {
+class GetCurrentBranchCommitsCommand(
+    val baseBranch: String
+) : AbstractGitCommand<List<RawCommit>>() {
+
     override val commandLine: String
-        get() = "git log main..HEAD --no-merges --oneline --pretty=format:\"%an|%s\""
+        get() = "git log $baseBranch..HEAD --no-merges --oneline --pretty=format:\"%an|%s\""
 
     override fun transform(rawOutput: String): List<RawCommit> =
         rawOutput

@@ -1,6 +1,6 @@
 package io.github.aloussase.changelog.git
 
-class GetCurrentBranchCommits : AbstractGitCommand<List<Pair<String, String>>>() {
+class GetCurrentBranchCommitsCommand : AbstractGitCommand<List<Pair<String, String>>>() {
     override val commandLine: String
         get() = "git log main..HEAD --no-merges --oneline --pretty=format:\"%an|%s\""
 

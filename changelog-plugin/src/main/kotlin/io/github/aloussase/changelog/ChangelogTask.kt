@@ -2,7 +2,7 @@ package io.github.aloussase.changelog
 
 import io.github.aloussase.changelog.config.Config
 import io.github.aloussase.changelog.formatter.ChangelogFormatterFactory
-import io.github.aloussase.changelog.git.GetCurrentBranchCommits
+import io.github.aloussase.changelog.git.GetCurrentBranchCommand
 import io.github.aloussase.changelog.parser.ChangelogParserFactory
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
@@ -25,7 +25,7 @@ abstract class ChangelogTask : DefaultTask() {
         val changelog = parser.parse(document).getOrThrow()
 
         // TODO: Add commits from current branch here.
-        println(GetCurrentBranchCommits().execute())
+        println(GetCurrentBranchCommand().execute())
 
         val formatter = ChangelogFormatterFactory.create(config.documentFormat)
         changelogFile.writeText(formatter.format(changelog))

@@ -12,6 +12,18 @@ better if a CHANGELOG accurately reflects Git history and vice-versa.
 
 ## Integrating with Git hooks
 
+To run the `changelog` task whenever you push to your remote repository, you can copy paste the sample
+pre-push hook script in `scripts/pre-push` to `.git/hooks/pre-push` and make sure the file is
+executable:
+
+```bash
+cp ./scripts/pre-push ./.git/hooks/pre-push
+chmod +x ./.git/hooks/pre-push
+```
+
+The script will run the `changelog` task whenever you push and add a commit to include the
+changelog changes. Feel free to edit the script to set the commit message to whatever you like.
+
 ## Future work
 
 - [ ] Task option to "publish" a release

@@ -25,6 +25,9 @@ class ChangelogPlugin : Plugin<Project> {
             }
             val document = changelogFile.readText()
             val changelog = parser.parse(document).getOrThrow()
+
+            // TODO: Add commits from current branch here.
+
             val formatter = ChangelogFormatterFactory.create(config.documentFormat)
             changelogFile.writeText(formatter.format(changelog))
         }

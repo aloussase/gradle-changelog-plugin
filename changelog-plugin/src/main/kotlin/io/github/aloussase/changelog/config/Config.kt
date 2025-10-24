@@ -3,13 +3,14 @@ package io.github.aloussase.changelog.config
 import io.github.aloussase.changelog.formats.DocumentFormat
 import org.gradle.api.GradleException
 
-data class Config(
+class Config private constructor(
     val fileName: String,
     val gitBranch: String,
     val documentFormat: DocumentFormat,
 ) {
+
     companion object {
-        fun from(extension: ChangelogPluginExtension): Config {
+        fun configure(extension: ChangelogPluginExtension): Config {
             val format = DocumentFormat.parse(extension.format.get())
             if (format == null) {
                 throw GradleException("Invalid document format: cannot make a changelog from ${extension.format.get()}")

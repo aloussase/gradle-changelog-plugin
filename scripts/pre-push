@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./gradlew changelog
+git add CHANGELOG.md
+git commit -m 'docs: update CHANGELOG.md' || true

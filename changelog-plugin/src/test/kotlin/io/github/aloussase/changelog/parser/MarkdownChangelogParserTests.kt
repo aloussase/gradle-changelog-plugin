@@ -107,4 +107,15 @@ class MarkdownChangelogParserTests {
         assertThat(result.exceptionOrNull()?.message, containsString("Expected a valid commit"))
     }
 
+    @Test
+    fun givenDocumentWithReleaseNameUnreleasedWhenParseIsCalledThenDocumentIsParsedCorrectly() {
+        val doc = "# Changelog\n\n## [Unreleased]\n- LOYMAR-123: first commit (johndoe@gmail.com)"
+        val parser = MarkdownChangelogParser()
+
+        val result = parser.parse(doc)
+
+        assertThat(result.isSuccess, equalTo(true))
+        assertThat(result.getOrThrow().entries.first().release, equalTo("Unreleased"))
+    }
+
 }

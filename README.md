@@ -1,23 +1,21 @@
-# changelog
+# gradle-changelog-plugin
 
-This project uses [Gradle](https://gradle.org/).
-To build and run the application, use the *Gradle* tool window by clicking the Gradle icon in the right-hand toolbar,
-or run it directly from the terminal:
+## Description
 
-* Run `./gradlew run` to build and run the application.
-* Run `./gradlew build` to only build the application.
-* Run `./gradlew check` to run all checks, including tests.
-* Run `./gradlew clean` to clean all build outputs.
+This is a Gradle plugin that generates changelog entries from Git commits. Yes, I know what the
+[Keep a Changelog](https://keepachangelog.com/en/1.0.0/) guys say. I understand that point of view, but I think if
+humans can write meaningful
+changelog entries in a Markdown document, they can also write meaningful commits. Furthermore, I think it's
+better if a CHANGELOG accurately reflects Git history and vice-versa.
 
-Note the usage of the Gradle Wrapper (`./gradlew`).
-This is the suggested way to use Gradle in production projects.
+## Usage
 
-[Learn more about the Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html).
+## Integrating with Git hooks
 
-[Learn more about Gradle tasks](https://docs.gradle.org/current/userguide/command_line_interface.html#common_tasks).
+## Future work
 
-This project follows the suggested multi-module setup and consists of the `app` and `utils` subprojects.
-The shared build logic was extracted to a convention plugin located in `buildSrc`.
+- [ ] Task option to "publish" a release
 
-This project uses a version catalog (see `gradle/libs.versions.toml`) to declare and version dependencies
-and both a build cache and a configuration cache (see `gradle.properties`).
+## License
+
+MIT

@@ -7,6 +7,7 @@ class Config private constructor(
     val fileName: String,
     val gitBranch: String,
     val documentFormat: DocumentFormat,
+    val ignoreCommits: Set<String>,
 ) {
 
     companion object {
@@ -29,7 +30,8 @@ class Config private constructor(
             return Config(
                 outputFileName,
                 branchName,
-                format
+                format,
+                extension.gitInfo.ignoreCommits.get().toSet()
             )
         }
     }

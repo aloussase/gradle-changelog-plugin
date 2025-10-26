@@ -10,6 +10,9 @@ changelog {
 
     git {
         baseBranch = "main"
+        ignoreCommits = listOf(
+            "test",
+        )
     }
 }
 

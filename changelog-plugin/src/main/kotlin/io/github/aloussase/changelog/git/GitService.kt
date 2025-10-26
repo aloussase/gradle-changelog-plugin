@@ -6,7 +6,8 @@ import io.github.aloussase.changelog.git.commands.GitCommand
 class GitService(
     val currentBranchCommand: GitCommand<Branch>,
     val currentBranchCommitsCommand: GitCommand<List<RawCommit>>,
-    val currentReleaseCommand: GitCommand<Tag>
+    val currentReleaseCommand: GitCommand<Tag>,
+    val ignoreCommitsContaining: Set<String>
 ) {
 
     fun getCurrrentBranchChanges(): ChangelogEntry {
@@ -15,13 +16,19 @@ class GitService(
         val release = Tag("Unreleased")
         return ChangelogEntry(
             release.name,
-            commits.map {
-                Commit(
-                    it.author,
-                    currentBranch.name,
-                    it.message
-                )
-            }
+            commits
+                .filter { commit ->
+                    ignoreCommitsContaining.none {
+                        commit.message.contains(it)
+                    }
+                }
+                .map {
+                    Commit(
+                        it.author,
+                        currentBranch.name,
+                        it.message
+                    )
+                }
         )
     }
 

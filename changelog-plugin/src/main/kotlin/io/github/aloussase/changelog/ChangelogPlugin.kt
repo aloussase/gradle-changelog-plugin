@@ -10,6 +10,7 @@ class ChangelogPlugin : Plugin<Project> {
         val extension = project.extensions.create("changelog", ChangelogPluginExtension::class.java)
 
         extension.gitInfo.baseBranch.convention("master")
+        extension.gitInfo.ignoreCommits.convention(emptyList())
         extension.format.convention("markdown")
         extension.fileName.convention("CHANGELOG.md")
 

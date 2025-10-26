@@ -12,6 +12,9 @@ changelog {
         baseBranch = "main"
         ignoreCommits = listOf(
             "test",
+            "tests",
+            "readme",
+            "README"
         )
     }
 }

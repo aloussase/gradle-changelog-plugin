@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## [Unreleased]
+- add-filter-option: docs: update CHANGELOG.md (Alexander Goussas)
 - add-filter-option: feat: add filter option to filter out commits from the CHANGELOG (Alexander Goussas)
 - git-commands: feat: add changes from current branch first so that they appear before existing commits in the entry (Alexander Goussas)
 - git-commands: feat: propagate shell errors if git commands fail (Alexander Goussas)

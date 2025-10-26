@@ -10,6 +10,8 @@ better if a CHANGELOG accurately reflects Git history and vice-versa.
 
 ## Usage
 
+TODO
+
 ## Integrating with Git hooks
 
 To run the `changelog` task whenever you push to your remote repository, you can copy paste the sample

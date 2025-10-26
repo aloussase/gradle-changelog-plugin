@@ -21,6 +21,7 @@ gradlePlugin {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation("org.hamcrest:java-hamcrest:2.0.0.0")
+    testImplementation("org.mockito:mockito-core:5.+")
 }
 
 tasks.withType<Test>().configureEach {

@@ -22,6 +22,7 @@ abstract class ChangelogTask : DefaultTask() {
             GetCurrentBranchCommand(),
             GetCurrentBranchCommitsCommand(config.gitBranch),
             GetCurrentReleaseCommand(),
+            config.ignoreCommits
         )
     }
 

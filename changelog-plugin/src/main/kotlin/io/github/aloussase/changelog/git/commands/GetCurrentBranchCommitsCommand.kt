@@ -10,7 +10,8 @@ class GetCurrentBranchCommitsCommand(
         get() = "git log $baseBranch..HEAD --no-merges --oneline --pretty=format:\"%an|%s\""
 
     override fun transform(rawOutput: String): List<RawCommit> =
-        rawOutput
+        if (rawOutput.isEmpty()) emptyList()
+        else rawOutput
             .split("\n")
             .map { it.split("|") }
             .map { RawCommit(it[0], it[1]) }

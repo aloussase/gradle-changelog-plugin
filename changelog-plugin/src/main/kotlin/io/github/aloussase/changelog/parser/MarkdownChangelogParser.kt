@@ -12,7 +12,7 @@ class MarkdownChangelogParser : ChangelogParser {
 
     companion object {
         private val RELEASE_VERSION_REGEX = Regex("## (\\[(\\d+\\.\\d+\\.\\d+|Unreleased)])")
-        private val COMMIT_REGEX = Regex("- ([\\w-]+): ([\\w :]+) \\(([\\w.]+@[\\w.]+|[\\w ]+)\\)")
+        private val COMMIT_REGEX = Regex("- ([\\w-]+): ([\\w :.]+) \\(([\\w.]+@[\\w.]+|[\\w ]+)\\)")
         private val DOC_TITLE_REGEX = Regex("# (Changelog|CHANGELOG)")
     }
 

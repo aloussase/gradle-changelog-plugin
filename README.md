@@ -10,7 +10,48 @@ better if a CHANGELOG accurately reflects Git history and vice-versa.
 
 ## Usage
 
-TODO
+Add the plugin dependency in your gradle config:
+
+```groovy
+plugins {
+    id("io.github.aloussase.changelog")
+}
+```
+
+Then, execute the `changelog` task:
+
+```shell
+./gradlew changelog
+```
+
+On first run, if there is not a changelog file, it will be created. You can configure the name of the file:
+
+```groovy
+changelog {
+    format = "markdown"
+    fileName = "CHANGELOG.md"
+
+    git {
+        baseBranch = "main"
+        ignoreCommits = listOf(
+                "test",
+                "tests",
+                "readme",
+                "README"
+        )
+    }
+}
+```
+
+In this example configuration, you can see that we are setting the file name to `CHANGELOG.md`.
+
+We are also configuring the format to markdown, setting the base branch name against which to compare
+the current branch. This means that the changelog will be populated with the commits in the current
+branch that are not present in the base branch. This setup works with feature branches in mind.
+
+Lastly, we are also configuring keywords to ignore. In this example, any commits containing the words
+tests or readme will be excluded from the changelog. This helps keep the changelog nice and tidy, free
+from housekeeping commits.
 
 ## Integrating with Git hooks
 
